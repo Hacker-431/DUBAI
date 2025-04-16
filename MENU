@@ -1,0 +1,77 @@
+✅ Step-by-Step: Submenu with Toast in Android Studio (Kotlin)
+📁 1. Create Menu Resource File
+Go to:
+res → menu → right-click → New → Menu Resource File → Name: menu_main.xml
+
+xml
+...
+<!-- res/menu/menu_main.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item"
+        android:title="Menu Item">
+        <menu>
+            <item android:id="@+id/sub_item1" android:title="sub item1" />
+            <item android:id="@+id/sub_item2" android:title="sub item2" />
+            <item android:id="@+id/sub_item3" android:title="sub item3" />
+            <item android:id="@+id/sub_item4" android:title="sub item4" />
+        </menu>
+    </item>
+</menu>
+🧠 2. MainActivity.kt
+kotlin
+...
+package com.example.submenudemo
+
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sub_item1 -> showToast("Sub Item 1 selected")
+            R.id.sub_item2 -> showToast("Sub Item 2 selected")
+            R.id.sub_item3 -> showToast("Sub Item 3 selected")
+            R.id.sub_item4 -> showToast("Sub Item 4 selected")
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+}
+🧱 3. Basic Layout (Optional): activity_main.xml
+xml
+...
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <!-- You can add any content here if needed -->
+
+</LinearLayout>
+✅ Features:
+App bar menu with a submenu
+
+Click on sub-items like "sub item1", and a Toast will appear
+
+Matches your screenshot example
+
