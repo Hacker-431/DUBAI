@@ -1,0 +1,127 @@
+📱 Step-by-Step: Event Listeners Demo in Android Studio (Kotlin)
+✅ 1. Layout XML: activity_main.xml
+xml
+...
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type something and press Enter" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:background="#00BCD4" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="BUTTON"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tvOutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:layout_marginTop="24dp" />
+</LinearLayout>
+🧠 2. Activity Logic: MainActivity.kt
+kotlin
+....
+package com.example.eventlistenerdemo
+
+import android.os.Bundle
+import android.view.KeyEvent
+import android.view.MotionEvent
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var editText: EditText
+    private lateinit var imageView: ImageView
+    private lateinit var button: Button
+    private lateinit var tvOutput: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        editText = findViewById(R.id.editText)
+        imageView = findViewById(R.id.imageView)
+        button = findViewById(R.id.button)
+        tvOutput = findViewById(R.id.tvOutput)
+
+        // 🖱️ Button Click
+        button.setOnClickListener {
+            appendText("You clicked on Button")
+        }
+
+        // 📌 Button Long Click
+        button.setOnLongClickListener {
+            appendText("You long clicked on Button")
+            true
+        }
+
+        // 👆 Touch Listener on ImageView
+        imageView.setOnTouchListener { _, event ->
+            when (event.actionMasked) {
+                MotionEvent.ACTION_DOWN -> appendText("ACTION DOWN")
+                MotionEvent.ACTION_UP -> appendText("ACTION UP")
+                MotionEvent.ACTION_POINTER_DOWN -> appendText("ACTION POINTER DOWN")
+            }
+            true
+        }
+
+        // 🎹 Key Listener on EditText
+        editText.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                appendText("You pressed Enter: ${editText.text}")
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun appendText(message: String) {
+        tvOutput.append("$message\n")
+    }
+}
+📦 3. Run the App
+Click the button → shows click/long click message
+
+Touch the image → shows touch actions
+
+Type in the EditText and press Enter → shows typed message
+
+✅ Features Achieved:
+✔️ Button onClick and onLongClick
+
+✔️ ImageView TouchListener for:
+
+ACTION_DOWN
+
+ACTION_UP
+
+ACTION_POINTER_DOWN
+
+✔️ EditText KeyListener for Enter key
+
+✔️ All messages displayed in the TextView below
+
